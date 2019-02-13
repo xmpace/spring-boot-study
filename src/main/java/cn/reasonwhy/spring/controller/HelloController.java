@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 @RestController
 public class HelloController {
@@ -31,5 +33,17 @@ public class HelloController {
     @GetMapping("/hello/drds")
     public String helloDrds() {
         return helloService.helloDrds();
+    }
+
+    @GetMapping("/hello/hystrix")
+    public String hystrix() {
+        long startTime = System.currentTimeMillis();
+        Future<String> future = testClient.getUserCommand(1).queue();
+        System.out.println(System.currentTimeMillis() - startTime);
+        try {
+            return future.get();
+        } catch (InterruptedException | ExecutionException e) {
+            return null;
+        }
     }
 }
