@@ -1,7 +1,7 @@
 package cn.reasonwhy.spring.service;
 
 import cn.reasonwhy.spring.domain.User;
-import cn.reasonwhy.spring.mapper.UserMapper;
+import cn.reasonwhy.spring.drds.mapper.UserMapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -10,18 +10,16 @@ import javax.annotation.Resource;
 public class HelloService {
 
     @Resource
-    private UserMapper userMapper;
+    private UserMapper userMapperDrds;
 
-    public HelloService() {
-        System.out.println("helloService");
+    @Resource
+    private cn.reasonwhy.spring.rds.mapper.UserMapper userMapperRds;
+
+    public String helloRds() {
+        return String.valueOf(userMapperRds.selectByName("野马"));
     }
 
-    public String hello() {
-        User user = userMapper.selectByName("肖密");
-        User updateDO = new User();
-        updateDO.setId(user.getId());
-        updateDO.setName("野马");
-        userMapper.updateSelective(updateDO);
-        return updateDO.getName();
+    public String helloDrds() {
+        return String.valueOf(userMapperDrds.selectByName("野马"));
     }
 }
