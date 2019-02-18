@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @EnableConfigurationProperties(DataSourceProperties.class)
 @MapperScan(
-        value = "cn.reasonwhy.spring.rds.mapper",
+        value = "cn.reasonwhy.spring.drds.mapper",
         sqlSessionFactoryRef = "drdsSqlSessionFactory",
         nameGenerator = DefaultBeanNameGenerator.class
 )
